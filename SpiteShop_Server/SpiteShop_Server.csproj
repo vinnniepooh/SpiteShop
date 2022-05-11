@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpiteShop_Models\SpiteShop_Models.csproj" />
+  </ItemGroup>
+
 </Project>

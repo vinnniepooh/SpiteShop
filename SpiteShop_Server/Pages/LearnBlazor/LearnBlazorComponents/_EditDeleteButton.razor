@@ -1,0 +1,14 @@
+﻿
+
+@if (IsActive)
+{
+     <input type="button" class="btn btn-primary " style="width:100px;" value="Delete">
+     <input type="button" class="btn btn-primary " style="width:100px;" value="Edit">
+}
+
+
+
+@code {
+    [Parameter]
+    public bool IsActive { get; set; }
+}

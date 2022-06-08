@@ -7,7 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.1.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="20.1.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.1.0.57" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SpiteShop_Models\SpiteShop_Models.csproj" />
+    <ProjectReference Include="..\Spite_Business\Spite_Business.csproj" />
+    <ProjectReference Include="..\Spite_DataAccess\Spite_DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\product\" />
   </ItemGroup>
 
 </Project>

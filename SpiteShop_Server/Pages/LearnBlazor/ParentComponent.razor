@@ -3,16 +3,34 @@
 
 <h3>Parent Child Relation</h3>
 
-<_ChildComponent OnButtonClick="ShowMessage" Title="Amenakoi"> koyim</_ChildComponent>
+<CascadingValue Value="@MessageForGrandChild" Name="Message">
+    <CascadingValue Value="@LuckyNumber" Name="LuckyNumber">
+<_ChildComponent @ref="childComp" OnButtonClick="ShowMessage" Title="Amenakoi" > 
 
+    <ChildContent>koyim</ChildContent> 
+
+    <DangerChildContent>Render Danger Content </DangerChildContent>
+</_ChildComponent>
+
+</CascadingValue>
+</CascadingValue>
 <p><b>@messageText</b></p>
 
+<_AnotherChildComponent placeholder="Placeholder from parentzzzzz"></_AnotherChildComponent>
 
-<_ChildComponent Title="second child component">hihihihi</_ChildComponent>
+<div class="row">
+    <button class="btn btn-success" @onclick="()=>childComp.ToastrSuccess()">Show SweetAlert</button>
+</div>
 
+@*<_ChildComponent Title="second child component">hihihihi</_ChildComponent>
+*@
 
 
 @code {
+    private _ChildComponent childComp;
+    public string MessageForGrandChild { get; set; } = "PADAMO";
+    public int LuckyNumber { get; set; } = 7;
+
     public string messageText = "";
 
     private void ShowMessage()

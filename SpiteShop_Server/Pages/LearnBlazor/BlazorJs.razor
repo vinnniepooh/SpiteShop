@@ -1,0 +1,57 @@
+﻿@page "/learnBlazor/blazorJs"
+@using SpiteShop_Server.Helper
+@inject IJSRuntime _JsRuntime
+<h3>BlazorJs</h3>
+
+<div class="row">
+    <button class="btn btn-secondary m-2" style="width:200px" @onclick="TestConfirmBox">Test Confirm Button</button>
+</div>
+
+<div class="row">
+    <button class="btn btn-success m-2" style="width:200px" @onclick="ToastrSuccess">Toastr Success</button>
+    <button class="btn btn-danger m-2" style="width:200px" @onclick="ToastrFailure">Toastr Failed</button>
+</div>
+<br />
+<div class="row">
+    <button class="btn btn-success m-2" style="width:200px" @onclick="SweetAlertSuccess">SweetAlert Success</button>
+    <button class="btn btn-danger m-2" style="width:200px" @onclick="SweetAlertFailure">SweetAlert Failed</button>
+</div>
+ 
+<div class="row">
+    @if (ConfirmResult)
+    {
+        <p>Confirmation has been made!</p>
+    }
+    else
+    {
+        <p>Confirmation Pending!</p>
+    }
+</div>
+
+@code {
+    public string ConfirmMessage = "Are you sure you want to click?";
+
+    public bool ConfirmResult { get; set; }
+
+    private async Task TestConfirmBox()
+    {
+        ConfirmResult = await _JsRuntime.InvokeAsync<bool>("confirm", ConfirmMessage);
+    }
+    private async Task ToastrSuccess()
+    {
+      await _JsRuntime.ToastrSuccess("Operation successful");
+    }
+    private async Task ToastrFailure()
+    {
+      await _JsRuntime.ToastrFailure("Operation failured");
+    }
+     private async Task SweetAlertSuccess()
+    {
+      await _JsRuntime.InvokeVoidAsync("ShowSwal","success", "Task completed successfully");
+    }
+     private async Task SweetAlertFailure()
+    {
+      await _JsRuntime.InvokeVoidAsync("ShowSwal", "error", "Task Failed");
+    }
+
+}

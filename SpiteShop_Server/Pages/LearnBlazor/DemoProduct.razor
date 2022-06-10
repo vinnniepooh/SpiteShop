@@ -1,5 +1,4 @@
-﻿
-@page "/learnBlazor/DemoProduct"
+﻿@page "/learnBlazor/DemoProduct"
 
 
 
@@ -10,11 +9,8 @@
     <div class="row">
         @foreach (var prod in Products)
         {
-          <_IndividualProduct Product="prod" OnFavoriteUpdated="FavoriteCountUpdate" OnClickSelectedLast="SelectedProductUpdate">
-
-              <FirstFragment>#1 </FirstFragment>
-
-              <SecondFragment>#2 </SecondFragment>
+          <_IndividualProduct Product="prod" OnFavoriteUpdated="FavoriteCountUpdate" OnClickSelectedLast="SelectedProductUpdate"
+          >
 
           </_IndividualProduct>
         }

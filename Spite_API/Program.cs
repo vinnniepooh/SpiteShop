@@ -16,7 +16,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 
-builder.Services.AddCors(O => O.AddPolicy("Spite", builder =>
+builder.Services.AddCors(O => O.AddPolicy("SpiteShop", builder =>
 {
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("Spite");
+app.UseCors("SpiteShop");
 app.UseRouting();
 
 app.UseAuthorization();

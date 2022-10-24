@@ -9,20 +9,21 @@ using Spite_DataAccess.Data;
 
 #nullable disable
 
-namespace Spite_DataAccess.Migrations
+namespace SpiteDataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220523110849_Products")]
-    partial class Products
+    [Migration("20221019093325_69")]
+    partial class _69
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "7.0.0-rc.2.22472.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Spite_DataAccess.Category", b =>
                 {
@@ -30,7 +31,7 @@ namespace Spite_DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -50,7 +51,7 @@ namespace Spite_DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
@@ -84,6 +85,31 @@ namespace Spite_DataAccess.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Spite_DataAccess.ProductPrice", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("ProductPrices");
+                });
+
             modelBuilder.Entity("Spite_DataAccess.Product", b =>
                 {
                     b.HasOne("Spite_DataAccess.Category", "Category")
@@ -93,6 +119,22 @@ namespace Spite_DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Spite_DataAccess.ProductPrice", b =>
+                {
+                    b.HasOne("Spite_DataAccess.Product", "Product")
+                        .WithMany("ProductPrices")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Spite_DataAccess.Product", b =>
+                {
+                    b.Navigation("ProductPrices");
                 });
 #pragma warning restore 612, 618
         }

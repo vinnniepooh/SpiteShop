@@ -6,10 +6,10 @@ using SpiteShop_Models;
 namespace Spite_API.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
-
         public ProductController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
@@ -24,7 +24,7 @@ namespace Spite_API.Controllers
         [HttpGet("{productId}")]
         public async Task<IActionResult> Get(int? productId)
         {
-            if(productId== null || productId == 0)
+            if (productId == null || productId == 0)
             {
                 return BadRequest(new ErrorModelDTO()
                 {
@@ -33,9 +33,8 @@ namespace Spite_API.Controllers
                 });
             }
 
-            var product = _productRepository.Get(productId.Value);
-
-            if(product == null)
+            var product = await _productRepository.Get(productId.Value);
+            if (product == null)
             {
                 return BadRequest(new ErrorModelDTO()
                 {
@@ -43,6 +42,7 @@ namespace Spite_API.Controllers
                     StatusCode = StatusCodes.Status404NotFound
                 });
             }
+
             return Ok(product);
         }
     }

@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spite_DataAccess", "Spite_D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spite_API", "Spite_API\Spite_API.csproj", "{FFB2CF99-F904-45D2-999F-8E11BEE1F7BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpiteShop_Client", "SpiteShop_Client\SpiteShop_Client.csproj", "{AEE872EF-6DAA-4E3F-8895-969F2D804D9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiteShop_Client", "SpiteShop_Client\SpiteShop_Client.csproj", "{AEE872EF-6DAA-4E3F-8895-969F2D804D9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

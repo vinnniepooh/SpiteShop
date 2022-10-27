@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Spite_DataAccess;
+using Spite_DataAccess.ViewModel;
 using SpiteShop_Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace Spite_Business.Mapper
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Product, ProductDTO>().ReverseMap();
             CreateMap<ProductPrice, ProductPriceDTO>().ReverseMap();
+            CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();
+            CreateMap<OrderHeader, OrderHeaderDTO>().ReverseMap();
+            CreateMap<Order, OrderDTO>().ReverseMap();
+
         }
     }
 }

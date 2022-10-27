@@ -1,4 +1,7 @@
-﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+﻿@inject ISyncLocalStorageService _syncLocalStorageService
+@inject ICartService _cartService
+@implements IDisposable
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">SpiteShop</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,14 +11,15 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item p-0">
                     <NavLink class="nav-link" href="/">
-                        <span class="p-2">Home
-                            </span>
-                    </NavLink>                 
+                        <span class="p-2">
+                            Home
+                        </span>
+                    </NavLink>
                 </li>
                 <li class="nav-item p-0">
                     <NavLink class="nav-link" href="/cart">
                         <span class="p-2">
-                            Cart
+                            <i class="bi bi-bag">(@GetCartCount())</i>
                         </span>
                     </NavLink>
                 </li>
@@ -23,10 +27,10 @@
             <form class="d-flex">
                 <ul class="navbar-nav">
                     <li class="nav-item p-0">
-                    <NavLink class="nav-link" href="registration">
-                        <span class="p-2">
-                            Register
-                        </span>
+                        <NavLink class="nav-link" href="registration">
+                            <span class="p-2">
+                                Register
+                            </span>
                         </NavLink>
                     </li>
                     <li class="nav-item p-0">
@@ -40,4 +44,21 @@
             </form>
         </div>
     </div>
-</nav> 
+</nav>
+
+
+@code {
+    protected override void OnInitialized()
+    {
+        _cartService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose(){
+        _cartService.OnChange -= StateHasChanged;
+    }
+
+    private  int GetCartCount(){
+        var cart =  _syncLocalStorageService.GetItem<List<ShoppingCart>>(SD.ShoppingCart);
+        return cart == null? 0:cart.Count;
+    }
+ }

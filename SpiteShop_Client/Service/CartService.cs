@@ -8,7 +8,7 @@ namespace SpiteShop_Client.Service
     public class CartService : ICartService
     {
         private readonly ILocalStorageService _localStorage;
-
+        public event Action OnChange;
         public CartService(ILocalStorageService localStorageService)
         {
             _localStorage = localStorageService;
@@ -42,7 +42,7 @@ namespace SpiteShop_Client.Service
                 });
             }
             await _localStorage.SetItemAsync(SD.ShoppingCart, cart);
-
+            OnChange.Invoke();
         }
 
         public async Task DecrementCart(ShoppingCart cartToDecrement)
@@ -65,6 +65,7 @@ namespace SpiteShop_Client.Service
                 }
             }
             await _localStorage.SetItemAsync(SD.ShoppingCart, cart);
+            OnChange.Invoke();
         }
     }
 }

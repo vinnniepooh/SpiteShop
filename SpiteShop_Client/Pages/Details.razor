@@ -129,11 +129,11 @@ else
     private async Task AddToCart()
     {
         ShoppingCart shoppingCart = new()
-            {
+        {
                 Count = DetailsVM.Count,
                 ProductId = ProductId,
                 ProductPriceId = DetailsVM.SelectedProductPriceId
-            };
+        };
 
             await _cartSertvice.IncrementCart(shoppingCart);
             _navigationManager.NavigateTo("/");

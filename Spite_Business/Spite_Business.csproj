@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SpiteShop_Models\SpiteShop_Models.csproj" />
+    <ProjectReference Include="..\Spite_Common\Spite_Common.csproj" />
     <ProjectReference Include="..\Spite_DataAccess\Spite_DataAccess.csproj" />
   </ItemGroup>
 

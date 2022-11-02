@@ -32,7 +32,7 @@ namespace Spite_Business.Repository.IRepository
                 OrderHeader = _db.OrderHeaders.FirstOrDefault(u => u.Id == id),
                 OrderDetails = _db.OrderDetails.Where(u => u.OrderHeaderId == id),
             };
-            if(order!= null)
+            if (order != null)
             {
                 return _mapper.Map<Order, OrderDTO>(order);
             }
@@ -42,15 +42,15 @@ namespace Spite_Business.Repository.IRepository
         public async Task<IEnumerable<OrderDTO>> GetAll(string? userId = null, string? status = null)
         {
             List<Order> OrderFromDb = new List<Order>();
-            IEnumerable<OrderHeader> orderHeaderList = _db.OrderHeaders.Where(u => u.UserId == userId);
-            IEnumerable<OrderDetail> orderDetailsList = _db.OrderDetails.Where(u=> u.Equals(status));
+            IEnumerable<OrderHeader> orderHeaderList = _db.OrderHeaders/*.Where(u => u.UserId == userId)*/;
+            IEnumerable<OrderDetail> orderDetailsList = _db.OrderDetails/*.Where(u => u.Equals(status))*/;
 
-            foreach(OrderHeader header in orderHeaderList)
+            foreach (OrderHeader header in orderHeaderList)
             {
                 Order order = new()
                 {
                     OrderHeader = header,
-                    OrderDetails = orderDetailsList.Where(u=>u.OrderHeaderId == header.Id )
+                    OrderDetails = orderDetailsList.Where(u => u.OrderHeaderId == header.Id)
                 };
                 OrderFromDb.Add(order);
             }
@@ -91,28 +91,36 @@ namespace Spite_Business.Repository.IRepository
         public async Task<int> Delete(int id)
         {
             var objHeader = await _db.OrderHeaders.FirstOrDefaultAsync(u => u.Id == id);
-            if(objHeader != null)
+            if (objHeader != null)
             {
                 IEnumerable<OrderDetail> objDetail = _db.OrderDetails.Where(u => u.OrderHeaderId == id);
                 _db.OrderDetails.RemoveRange(objDetail);
                 _db.OrderHeaders.Remove(objHeader);
                 return _db.SaveChanges();
             }
-            return 0;      
+            return 0;
         }
 
-        public Task<OrderHeaderDTO> UpdateHeader(OrderHeaderDTO orderHeaderDTO)
+        public async Task<OrderHeaderDTO> UpdateHeader(OrderHeaderDTO objDTO)
         {
-
+            if (objDTO != null)
+            {
+                var OrderHeader = _mapper.Map<OrderHeaderDTO, OrderHeader>(objDTO);
+                _db.OrderHeaders.Update(OrderHeader);
+                await _db.SaveChangesAsync();
+                return _mapper.Map<OrderHeader, OrderHeaderDTO>(OrderHeader);
+            }
+            return new OrderHeaderDTO();
         }
+
         public async Task<OrderHeaderDTO> MarkPaymentSuccessful(int id)
         {
             var data = await _db.OrderHeaders.FindAsync(id);
-            if(data != null)
+            if (data != null)
             {
                 return new OrderHeaderDTO();
             }
-            if(data.Status == SD.Status_Pending)
+            if (data.Status == SD.Status_Pending)
             {
                 data.Status = SD.Status_Confirmed;
                 await _db.SaveChangesAsync();
@@ -120,9 +128,25 @@ namespace Spite_Business.Repository.IRepository
             }
             return new OrderHeaderDTO();
         }
-        public Task<bool> UpdateOrderStatus(int orderId, string status)
-        {
 
+        public async Task<bool> UpdateOrderStatus(int orderId, string status)
+        {
+            var data = await _db.OrderHeaders.FindAsync(orderId);
+            if (data != null)
+            {
+                return false;
+            }
+
+            data.Status = status;
+
+            if (status == SD.Status_Shipped)
+            {
+                data.ShippingDate = DateTime.Now;
+            }
+
+            await _db.SaveChangesAsync();
+            return true;
         }
     }
 }
+

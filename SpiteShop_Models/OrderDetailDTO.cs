@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spite_DataAccess
+namespace SpiteShop_Models
 {
     public class OrderDetailDTO
     {
